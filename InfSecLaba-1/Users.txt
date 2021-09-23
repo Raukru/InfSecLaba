@@ -1,0 +1,12 @@
+﻿{
+	"Nikita" : {
+		{
+			"Role" : "ADMIN",
+			"Password" : "12345"
+		}
+	},
+	"Vasy" : {
+		"Role" : "USER",
+		"Password" : "21343"
+	}
+}
