@@ -7,6 +7,26 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        
+        <Menu Height="20" VerticalAlignment="Top">
+            <MenuItem Header="Пользователь">
+                <MenuItem Header="Настройки" ></MenuItem>
+                <MenuItem Header="Смена пользователя" ></MenuItem>
+                <Separator />
+                <MenuItem Header="Выход" ></MenuItem>
+            </MenuItem>
+            <MenuItem Header="Справка" >
+                <MenuItem Header="О программе" ></MenuItem>
+            </MenuItem>
+        </Menu>
+        <Grid ShowGridLines="True" Margin="0,20,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="3*"/>
+            </Grid.ColumnDefinitions>
+            
+            <ListView Name="userList" Grid.Column="1">
+                
+            </ListView>
+        </Grid>
     </Grid>
 </Window>
