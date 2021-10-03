@@ -87,6 +87,7 @@ namespace InfSecLaba_1
                 }
                 catch (PasswordException ex)
                 {
+                    attempt++;
                     MessageBox.Show(ex.Message);
                 }
             }
@@ -108,6 +109,7 @@ namespace InfSecLaba_1
 
         private void Button_Back_Click(object sender, RoutedEventArgs e)
         {
+            attempt = 0;
             ViewerDefault();
         }
 
@@ -132,6 +134,7 @@ namespace InfSecLaba_1
             textbox_pass.Visibility = Visibility.Visible;
             button_back.Visibility = Visibility.Visible;
             button_authorize.Visibility = Visibility.Visible;
+            button_next.Visibility = Visibility.Collapsed;
         }
 
         private void ViewerDefault()
