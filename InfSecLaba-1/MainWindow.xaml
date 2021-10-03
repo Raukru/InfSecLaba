@@ -5,28 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InfSecLaba_1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="450" Width="800"
+        MinHeight="250" MinWidth="400">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <Menu Height="20" VerticalAlignment="Top">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu VerticalAlignment="Top">
             <MenuItem Header="Пользователь">
-                <MenuItem Header="Настройки" ></MenuItem>
-                <MenuItem Header="Смена пользователя" ></MenuItem>
+                <MenuItem Click="MenuItem_ChangePassword_Click" Header="Смена пароля"></MenuItem>
+                <MenuItem Header="Смена пользователя"></MenuItem>
                 <Separator />
-                <MenuItem Header="Выход" ></MenuItem>
+                <MenuItem Header="Выход"></MenuItem>
             </MenuItem>
-            <MenuItem Header="Справка" >
+            <MenuItem Header="Справка">
                 <MenuItem Header="О программе" ></MenuItem>
             </MenuItem>
         </Menu>
-        <Grid ShowGridLines="True" Margin="0,20,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="3*"/>
-            </Grid.ColumnDefinitions>
-            
-            <ListView Name="userList" Grid.Column="1">
-                
-            </ListView>
+
+        <Grid Grid.Row="1" Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <WrapPanel>
+                <TextBlock Margin="0,0,0,0" >Вы вошли как: </TextBlock>
+                <TextBlock x:Name="textblock_cur_name" FontWeight="Bold" Margin="5,0,0,0"></TextBlock>
+                <TextBlock Margin="30,0,0,0">Текущая роль:</TextBlock>
+                <TextBlock x:Name="textblock_cur_role" FontWeight="Bold" Margin="5,0,0,0"></TextBlock>
+            </WrapPanel>
+            <DataGrid x:Name="WindowUserList" Grid.Row="1" FontSize="14" AutoGenerateColumns="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Binding="{Binding Path=Name}" Header="Имя пользователя" Width="*" IsReadOnly="True"/>
+                    <DataGridTextColumn Binding="{Binding Path=Role}" Header="Роль" Width="*" IsReadOnly="True"/>
+                    <DataGridCheckBoxColumn Binding="{Binding Path=Active}" Header="Блокировка" Width="80"/>
+                    <DataGridCheckBoxColumn Binding="{Binding Path=PassRestrictions}" Header="Ограничение на пароль" Width="80"/>
+                </DataGrid.Columns>
+            </DataGrid>
         </Grid>
+
     </Grid>
 </Window>

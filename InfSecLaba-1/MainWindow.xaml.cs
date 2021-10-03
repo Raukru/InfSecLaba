@@ -18,19 +18,35 @@ namespace InfSecLaba_1
 {
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        UsersController u;
+        User curUser;
+
+        public MainWindow(User authUser)
         {
-            UsersController u = UsersController.GetInstance();
-            u.RestUsers();
-            u.AddUser("Nik", "ADMIN", "1234");
-            u.AddUser("Joh", "USER", "3352");
-            u.AddUser("Lua", "ADMIN", "3452", false);
-            u.AddUser("Joh", "USER", "3352");
-            u.AddUser("Hah", "USER", "435654");
-            u.DeleteUser("Hah");
-            u.Users[2].ChangePassword("3452", "1111", "1111");
-            u.Save();
             InitializeComponent();
+            u = UsersController.GetInstance();
+            curUser = authUser;
+            
+            WindowUserList.ItemsSource = u.Users;
+            if (curUser.Role != "ADMIN")
+            {
+                WindowUserList.Visibility = Visibility.Collapsed;
+            }
+
+            textblock_cur_name.Text = curUser.Name;
+            textblock_cur_role.Text = curUser.Role;
+        }
+
+        // TODO: Нужно сделать добавление пользователей администратором (интерфейс)
+        // TODO: Нужно сделать блокироку пользователей (интерфейс)
+        // TODO: Нужно сделать Включение выключение ограниченей (интерфейс)
+
+        // TODO: Сделать окошко About
+
+        private void MenuItem_ChangePassword_Click(object sender, RoutedEventArgs e)
+        {
+            ChangePaswordWindow changePaswordWindow = new ChangePaswordWindow(ref curUser);
+            changePaswordWindow.ShowDialog();
         }
     }
 }

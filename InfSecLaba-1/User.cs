@@ -9,52 +9,91 @@ namespace InfSecLaba_1
 {
     public class User
     {
-        public string Name { get; set; }
-        public string Role { get; set; }
-        public string Password { get; set; }
-        public bool Active { get; set; }
+        public string Name { get; set; } = null;
+        public string Role { get; set; } = null;
+        public string Password { get; set; } = null;
+        public bool Active { get; set; } = false;
+        public bool PassRestrictions { get; set; } = true;
 
-        protected static string json_path = "Users.txt";
+        private string letteSymbols = "qwertyuiopasdfghjklzxcvbnm";
+        private string punctuationSymbols = ".,!?;\"():";
+        private string mathSymbols = "-+/*=";
 
-        public User()
-        {
-            Name = null;
-            Role = null;
-            Password = null;
-            Active = false;
-        }
+        public User() { }
 
         public User(string name,
                     string role,
                     string password,
-                    bool active = true)
+                    bool active,
+                    bool restrictions)
         {
             Name = name;
             Role = role;
             Password = password;
             Active = active;
+            PassRestrictions = restrictions;
         }
 
-        // TODO: Доделать авторизацию
-        public bool Authorize(string password)
+        public User Authorize(string password)
         {
             if(password == Password)
             {
-                return true;
+                return this;
             }
-            return false;
+            throw new PasswordException("Неправильный пароль");
         }
 
-        public bool ChangePassword(string old_password, string new_password1, string new_password2)
+        public void ChangePassword(string new_password1, string new_password2, string old_password = "")
         {
-            // TODO: Нужно сделать взятие пароля из User.txt
             if (old_password == Password)
             {
-                if (new_password1 == new_password2)
+                if (PassRestrictions)
                 {
-                    Password = new_password1;
-                    return true;
+                    if (restrictionsCheck(new_password1))
+                    {
+                        if (new_password1 == new_password2)
+                        {
+                            Password = new_password1;
+                            return;
+                        }
+                        else
+                        {
+                            throw new PasswordException("Парольи не совпадают");
+                        }
+                    }
+                    else
+                    {
+                        throw new PasswordException("Пароль должен содержать хотя бы одну букв, знак препинания и знак арифметическую операций");
+                    }
                 }
+                else
+                {
+                    if (new_password1 == new_password2)
+                    {
+                        Password = new_password1;
+                        return;
+                    }
+                    else
+                    {
+                        throw new PasswordException("Парольи не совпадают");
+                    }
+                }
+            }
+            else
+            {
+                throw new PasswordException("Неправильный старый пароль");
+            }
+        }
+
+        private bool restrictionsCheck(string pass)
+        {
+            var passCharArray = pass.ToCharArray();
+            bool IsPunctuationSymbol = passCharArray.Any(ch => punctuationSymbols.Contains(ch));
+            bool IsMathSymbol = passCharArray.Any(ch => mathSymbols.Contains(ch));
+            bool IsLetteSymbol = passCharArray.Any(ch => letteSymbols.Contains(ch));
+            if (IsPunctuationSymbol && IsMathSymbol && IsLetteSymbol)
+            {
+                return true;
             }
             return false;
         }

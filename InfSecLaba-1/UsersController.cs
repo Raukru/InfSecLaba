@@ -9,13 +9,14 @@ using Newtonsoft.Json.Linq;
 
 namespace InfSecLaba_1
 {
-    class UsersController
+        class UsersController
     {
         public IList<User> Users { get; set; }
         public static string UsersFilePath = "Users.txt";
 
         private UsersController()
         {
+            // TODO: При первом запуске должен создаваться файл с админом
             Users = LoadUsers();
         }
 
@@ -37,20 +38,34 @@ namespace InfSecLaba_1
         /// <param name="role"> Роль пользоателя: ADMIN, USER </param>
         /// <param name="password"> Пароль пользователя </param>
         /// <param name="active"> Если true - значит пользователь не заблокирован </param>
-        public void AddUser(string name,
-                            string role,
-                            string password,
-                            bool active = true
+        public bool AddUser(string name,
+                            string role = "USER",
+                            string password = "",
+                            bool active = true,
+                            bool restrictions = true
                             )
         {
-            Users.Add(new User
+            User newUser = new User
             {
                 Name = name,
                 Role = role,
                 Password = password,
-                Active = active
-            });
+                Active = active,
+                PassRestrictions = restrictions
+            };
+
+            foreach(User user in Users)
+            {
+                if(user.Name == newUser.Name)
+                {
+                    return false;
+                }
+            }
+            
+            Users.Add(newUser);
             Save();
+            return true;
+
         }
 
         /// <summary>
