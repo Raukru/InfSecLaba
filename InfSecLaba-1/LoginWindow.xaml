@@ -18,9 +18,9 @@
             </Style.Resources>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#FF6DA0EA" />
-                    <Setter Property="Foreground" Value="#FF253544"/>
-                    <Setter Property="BorderBrush" Value="#FF72ADD1"/>
+                    <Setter Property="Background" Value="#FFDA632E" />
+                    <Setter Property="Foreground" Value="#FFF5CEB8"/>
+                    <Setter Property="BorderBrush" Value="#FFD19072"/>
                 </Trigger>
             </Style.Triggers>
         </Style>
@@ -51,16 +51,12 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="textblock_name" FontSize="15" Grid.Column="0" Grid.Row="0">Имя</TextBlock>
-                    <TextBlock x:Name="textblock_pass" FontSize="15" Grid.Column="0" Grid.Row="1" Visibility="Collapsed">Пароль</TextBlock>
-                    <TextBlock x:Name="textblock_pass2" FontSize="15" Grid.Column="0" Grid.Row="2" Visibility="Collapsed">Повтор пароля</TextBlock>
+                    <TextBlock x:Name="textblock_pass" FontSize="15" Grid.Column="0" Grid.Row="1">Пароль</TextBlock>
                     <TextBox x:Name="textbox_name" FontSize="15" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center"/>
-                    <PasswordBox x:Name="textbox_pass" FontSize="15" Grid.Column="1" Grid.Row="1" VerticalContentAlignment="Center" Visibility="Collapsed"/>
-                    <PasswordBox x:Name="textbox_pass2" FontSize="15" Grid.Column="1" Grid.Row="2" VerticalContentAlignment="Center" Visibility="Collapsed"/>
+                    <PasswordBox x:Name="textbox_pass" FontSize="15" Grid.Column="1" Grid.Row="1" VerticalContentAlignment="Center"/>
                 </Grid>
                 <DockPanel LastChildFill="false" Margin="10" Height="30" >
-                    <Button x:Name="button_back" Click="Button_Back_Click" Width="100" FontSize="15" DockPanel.Dock="Left" Visibility="Collapsed">Назад</Button>
-                    <Button x:Name="button_next" Click="Button_Next_Click" Width="100" FontSize="15" DockPanel.Dock="Right">Продолжить</Button>
-                    <Button x:Name="button_authorize" Click="Button_Authorize_Click" Width="100" FontSize="15" DockPanel.Dock="Right" Visibility="Collapsed">Войти</Button>
+                    <Button x:Name="button_authorize" Click="Button_Authorize_Click" Width="100" FontSize="15" DockPanel.Dock="Right">Войти</Button>
                 </DockPanel>
                 
             </StackPanel>

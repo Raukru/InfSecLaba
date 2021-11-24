@@ -17,6 +17,7 @@ namespace InfSecLaba_1
     public partial class ChangePaswordWindow : Window
     {
         User curUser;
+        UserFileController ufc = new UserFileController();
 
         public ChangePaswordWindow(ref User user)
         {
@@ -33,6 +34,7 @@ namespace InfSecLaba_1
                     textbox_pass.Password,
                     textbox_pass2.Password,
                     textbox_pass_old.Password);
+                ufc.ChangePassword(curUser, textbox_pass.Password);
                 Close();
             }
             catch (PasswordException ex)

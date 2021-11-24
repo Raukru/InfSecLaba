@@ -1,19 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ComponentModel;
 using System.Text;
 using System.Threading.Tasks;
 
 
 namespace InfSecLaba_1
 {
-    public class User
+    public class User : INotifyPropertyChanged
     {
-        public string Name { get; set; } = null;
-        public string Role { get; set; } = null;
-        public string Password { get; set; } = null;
-        public bool Active { get; set; } = false;
-        public bool PassRestrictions { get; set; } = true;
+        private string _name = "";
+        private bool _active = true;
+        private bool _passRestrictions = true;
+
+        public string Role { get; set; } = "USER";
+        public string Password { get; set; } = "";
+        public string Name
+        {
+            get { return _name; }
+            set {
+                if (_name == value)
+                    return;
+                _name = value;
+                OnPropertyChanged("Name");
+            }
+        }
+        public bool Active
+        {
+            get { return _active; }
+            set
+            {
+                if (_active == value)
+                    return;
+                _active = value;
+                OnPropertyChanged("Active");
+            }
+        }
+        public bool PassRestrictions
+        {
+            get { return _passRestrictions; }
+            set
+            {
+                if (_passRestrictions == value)
+                    return;
+                _passRestrictions = value;
+                OnPropertyChanged("PassRestrictions");
+            }
+        }
 
         private string letteSymbols = "qwertyuiopasdfghjklzxcvbnm";
         private string punctuationSymbols = ".,!?;\"():";
@@ -34,22 +68,34 @@ namespace InfSecLaba_1
             PassRestrictions = restrictions;
         }
 
+        /// <summary>
+        /// Авторизация пользователя
+        /// </summary>
+        /// <param name="password">Пароль пользователя</param>
+        /// <returns>Возвращает ссылку на текущего пользователя</returns>
         public User Authorize(string password)
         {
             if(password == Password)
             {
-                return this;
+                if (Active == true)
+                    return this;
             }
-            throw new PasswordException("Неправильный пароль");
+            throw new PasswordException("Неправильный пароль.");
         }
 
+        /// <summary>
+        /// Проверяет пароль пользователя
+        /// </summary>
+        /// <param name="new_password1"></param>
+        /// <param name="new_password2"></param>
+        /// <param name="old_password"></param>
         public void ChangePassword(string new_password1, string new_password2, string old_password = "")
         {
             if (old_password == Password)
             {
                 if (PassRestrictions)
                 {
-                    if (restrictionsCheck(new_password1))
+                    if (RestrictionsCheck(new_password1))
                     {
                         if (new_password1 == new_password2)
                         {
@@ -58,12 +104,12 @@ namespace InfSecLaba_1
                         }
                         else
                         {
-                            throw new PasswordException("Парольи не совпадают");
+                            throw new PasswordException("Пароли не совпадают.");
                         }
                     }
                     else
                     {
-                        throw new PasswordException("Пароль должен содержать хотя бы одну букв, знак препинания и знак арифметическую операций");
+                        throw new PasswordException("Пароль должен содержать хотя бы одну букв, знак препинания и знак арифметической операции.");
                     }
                 }
                 else
@@ -75,17 +121,22 @@ namespace InfSecLaba_1
                     }
                     else
                     {
-                        throw new PasswordException("Парольи не совпадают");
+                        throw new PasswordException("Пароли не совпадают.");
                     }
                 }
             }
             else
             {
-                throw new PasswordException("Неправильный старый пароль");
+                throw new PasswordException("Неправильный старый пароль.");
             }
         }
 
-        private bool restrictionsCheck(string pass)
+        /// <summary>
+        /// Проверяет пароль на обязательные символя
+        /// </summary>
+        /// <param name="pass"></param>
+        /// <returns></returns>
+        public bool RestrictionsCheck(string pass)
         {
             var passCharArray = pass.ToCharArray();
             bool IsPunctuationSymbol = passCharArray.Any(ch => punctuationSymbols.Contains(ch));
@@ -96,6 +147,12 @@ namespace InfSecLaba_1
                 return true;
             }
             return false;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected virtual void OnPropertyChanged(string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

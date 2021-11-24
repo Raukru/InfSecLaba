@@ -53,7 +53,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
                     <TextBlock x:Name="textblock_pass_old" FontSize="15" Grid.Column="0" Grid.Row="0" Visibility="Visible">Старый пароль</TextBlock>
-                    <TextBlock x:Name="textblock_pass" FontSize="15" Grid.Column="0" Grid.Row="1" Visibility="Visible">Пароль</TextBlock>
+                    <TextBlock x:Name="textblock_pass" FontSize="15" Grid.Column="0" Grid.Row="1" Visibility="Visible">Новый пароль</TextBlock>
                     <TextBlock x:Name="textblock_pass2" FontSize="15" Grid.Column="0" Grid.Row="2" Visibility="Visible">Повтор пароля</TextBlock>
                     <PasswordBox x:Name="textbox_pass_old" FontSize="15" Grid.Column="1" Grid.Row="0" VerticalContentAlignment="Center" Visibility="Visible"/>
                     <PasswordBox x:Name="textbox_pass" FontSize="15" Grid.Column="1" Grid.Row="1" VerticalContentAlignment="Center" Visibility="Visible"/>
